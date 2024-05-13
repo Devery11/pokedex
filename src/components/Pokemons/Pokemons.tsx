@@ -1,8 +1,15 @@
-import { Button, ScrollView, Text } from "react-native";
+import {
+  ActivityIndicator,
+  Button,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import {Pokemon} from '../Pokemon/Pokemon.tsx';
 import {useDispatch, useSelector} from 'react-redux';
 import {State} from '../../types/State.ts';
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect, useMemo} from 'react';
 import {fetchPokemons} from '../../api/fetchPokemons.ts';
 import {setNewPage} from '../../store/pokemonReducer.ts';
 
@@ -27,26 +34,40 @@ export const Pokemons: React.FC = () => {
     dispatch(setNewPage(newPage));
   }, [currentPage]);
 
+  const filteredPokemonList = useMemo(
+    () =>
+      pokemonsList?.filter(pokemon =>
+        pokemon.name.includes(query?.toLowerCase().trim() as string),
+      ),
+    [pokemonsList, query],
+  );
+
   return !errorMessage ? (
     <ScrollView>
-      {pokemonsList
-        ?.filter(pokemon =>
-          pokemon.name.includes(query?.toLowerCase().trim() as string),
-        )
-        .map((pokemon, index) => (
+      <View style={style.container}>
+        {filteredPokemonList.map((pokemon, index) => (
           <Pokemon pokemon={pokemon} index={index} key={pokemon.name} />
         ))}
-      {!isLoading && <Button title="LOAD MORE" onPress={loadMore} />}
+        {!isLoading ? (
+          <Button title="LOAD MORE" onPress={loadMore} />
+        ) : (
+          <ActivityIndicator size="large" color="#f00" />
+        )}
+      </View>
     </ScrollView>
   ) : (
-    <Text
-      style={{
-        fontSize: 24,
-        margin: 'auto',
-        backgroundColor: 'crimson',
-        padding: 24,
-      }}>
-      {errorMessage}
-    </Text>
+    <Text style={style.errorMessage}>{errorMessage}</Text>
   );
 };
+
+const style = StyleSheet.create({
+  container: {
+    marginHorizontal: 16,
+  },
+  errorMessage: {
+    fontSize: 24,
+    margin: 'auto',
+    backgroundColor: 'crimson',
+    padding: 24,
+  },
+});

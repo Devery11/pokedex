@@ -1,5 +1,12 @@
 import React from 'react';
-import {Image, SafeAreaView, ScrollView, Text, View} from 'react-native';
+import {
+  Image,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import {useRoute} from '@react-navigation/native';
 import {Pokemon} from 'pokenode-ts';
 
@@ -10,51 +17,45 @@ export const PokemonDetails = () => {
   return (
     <SafeAreaView>
       <ScrollView>
-        <View style={{padding: 24}}>
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}>
+        <View style={styles.container}>
+          <View style={styles.basicInfo}>
             <Image
               src={pokemonInfo?.sprites.other?.home.front_default ?? ''}
-              style={{
-                height: 160,
-                width: 160,
-                borderRadius: 8,
-                borderWidth: 1,
-                backgroundColor: '#ADD8E6',
-                marginRight: 16,
-              }}
+              style={styles.pokemonImage}
             />
             <View>
-              <Text
-                style={{
-                  fontWeight: 'bold',
-                  textTransform: 'capitalize',
-                  fontSize: 20,
-                }}>
+              <Text style={[styles.pokemonTitle, styles.statName]}>
                 {pokemonInfo.name}
               </Text>
-              <Text>Id: {pokemonInfo?.id}</Text>
-              <Text>
-                Types:{' '}
+              <Text style={styles.text}>
+                <Text style={styles.statName}>id: </Text> {pokemonInfo?.id}
+              </Text>
+              <Text style={styles.text}>
+                <Text style={styles.statName}>types: </Text>
                 {pokemonInfo?.types.map(type => (
                   <Text key={type.type.url}>{type.type.name}, </Text>
                 ))}
               </Text>
             </View>
           </View>
-          <View style={{marginVertical: 20}}>
-            <Text>Height: {pokemonInfo?.height}</Text>
-            <Text>Weight: {pokemonInfo?.weight}</Text>
-            <Text>Base exp: {pokemonInfo?.base_experience}</Text>
+          <View style={styles.basicMetrics}>
+            <Text style={styles.text}>
+              <Text style={styles.statName}>height: </Text>
+              {pokemonInfo?.height}
+            </Text>
+            <Text style={styles.text}>
+              <Text style={styles.statName}>weight: </Text>
+              {pokemonInfo?.weight}
+            </Text>
+            <Text style={styles.text}>
+              <Text style={styles.statName}>base exp: </Text>
+              {pokemonInfo?.base_experience}
+            </Text>
           </View>
           <View>
-            <Text style={{fontWeight: 'bold', fontSize: 20}}>Stats:</Text>
+            <Text style={[styles.pokemonTitle, styles.statName]}>stats:</Text>
             {pokemonInfo?.stats.map(stat => (
-              <Text style={{fontSize: 16, lineHeight: 30}} key={stat.stat.url}>
+              <Text style={styles.text} key={stat.stat.url}>
                 {stat.stat.name.toUpperCase() + ': ' + stat.base_stat}
               </Text>
             ))}
@@ -64,3 +65,36 @@ export const PokemonDetails = () => {
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 24,
+  },
+  pokemonImage: {
+    height: 160,
+    width: 160,
+    borderRadius: 8,
+    borderWidth: 1,
+    backgroundColor: '#ADD8E6',
+    marginRight: 16,
+  },
+  statName: {
+    fontWeight: 'bold',
+    textTransform: 'capitalize',
+  },
+  text: {
+    lineHeight: 30,
+    fontSize: 16,
+  },
+  pokemonTitle: {
+    fontSize: 24,
+  },
+  basicMetrics: {
+    marginVertical: 20,
+  },
+  basicInfo: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+});
