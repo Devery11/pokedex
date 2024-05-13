@@ -1,4 +1,4 @@
-export enum ActionType {
+export enum Action {
   addPokemonsList = 'add_pokemons_list',
   addPokemonInfoByName = 'add_pokemon_by_name',
   setFilterQuery = 'set_filter_query',

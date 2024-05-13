@@ -4,7 +4,6 @@ import {
   setIsLoading,
   setNewErrorMessage,
 } from '../store/pokemonReducer.ts';
-import {Action, Dispatch} from '@reduxjs/toolkit';
 import {AppThunk} from '../types/AppThunk.ts';
 
 const API_URL = 'https://pokeapi.co/api/v2/pokemon/';
@@ -23,9 +22,9 @@ export const fetchPokemons =
       })
       .then(json => {
         dispatch(addPokemonsListFromServer(json));
-        dispatch(setIsLoading(false));
       })
-      .catch(error => dispatch(setNewErrorMessage(error.message)));
+      .catch(error => dispatch(setNewErrorMessage(error.message)))
+      .finally(() => dispatch(setIsLoading(false)));
   };
 
 export const fetchPokemonInfo =
@@ -40,7 +39,7 @@ export const fetchPokemonInfo =
         }
       })
       .then(pokemonInfo =>
-        dispatch(addPokemonByNameFromServer(pokemonInfo, index))
+        dispatch(addPokemonByNameFromServer(pokemonInfo, index)),
       )
       .catch(error => dispatch(setNewErrorMessage(error.message)));
   };

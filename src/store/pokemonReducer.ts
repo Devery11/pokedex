@@ -1,8 +1,8 @@
-import {Action} from '../types/Action.ts';
-import {ActionType} from '../enums/ActionType.ts';
+import {ActionType} from '../types/ActionType.ts';
+import {Action} from '../enums/Action.ts';
 import {NamedAPIResourceList} from 'pokenode-ts';
 import {State} from '../types/State.ts';
-import { PokemonList } from "../interfaces/PokemonList.ts";
+import {PokemonList} from '../interfaces/PokemonList.ts';
 
 const defaultState = {
   pokemonsFromServer: {
@@ -14,9 +14,9 @@ const defaultState = {
   errorMessage: '',
 } as State;
 
-export const pokemonReducer = (state = defaultState, action: Action) => {
+export const pokemonReducer = (state = defaultState, action: ActionType) => {
   switch (action.type) {
-    case ActionType.addPokemonsList:
+    case Action.addPokemonsList:
       return {
         ...state,
         pokemonsFromServer: {
@@ -27,7 +27,7 @@ export const pokemonReducer = (state = defaultState, action: Action) => {
           ],
         },
       };
-    case ActionType.addPokemonInfoByName:
+    case Action.addPokemonInfoByName:
       const newPokemonsFromServer = [...state.pokemonsFromServer.results];
       newPokemonsFromServer[action.payload.index] = {
         ...newPokemonsFromServer[action.payload.index],
@@ -40,22 +40,22 @@ export const pokemonReducer = (state = defaultState, action: Action) => {
           results: newPokemonsFromServer,
         },
       };
-    case ActionType.setFilterQuery:
+    case Action.setFilterQuery:
       return {
         ...state,
         query: action.payload,
       };
-    case ActionType.setIsLoading:
+    case Action.setIsLoading:
       return {
         ...state,
         isLoading: action.payload,
       };
-    case ActionType.setNewPage:
+    case Action.setNewPage:
       return {
         ...state,
         currentPage: action.payload,
       };
-    case ActionType.setNewErrorMessage:
+    case Action.setNewErrorMessage:
       return {
         ...state,
         errorMessage: action.payload,
@@ -66,7 +66,7 @@ export const pokemonReducer = (state = defaultState, action: Action) => {
 };
 
 export const addPokemonsListFromServer = (payload: NamedAPIResourceList) => ({
-  type: ActionType.addPokemonsList,
+  type: Action.addPokemonsList,
   payload,
 });
 
@@ -74,7 +74,7 @@ export const addPokemonByNameFromServer = (
   data: NamedAPIResourceList,
   index: number,
 ) => ({
-  type: ActionType.addPokemonInfoByName,
+  type: Action.addPokemonInfoByName,
   payload: {
     pokemonInfoData: data,
     index: index,
@@ -82,21 +82,21 @@ export const addPokemonByNameFromServer = (
 });
 
 export const setFilterQuery = (payload: string) => ({
-  type: ActionType.setFilterQuery,
+  type: Action.setFilterQuery,
   payload,
 });
 
 export const setIsLoading = (payload: boolean) => ({
-  type: ActionType.setIsLoading,
+  type: Action.setIsLoading,
   payload,
 });
 
 export const setNewPage = (payload: number) => ({
-  type: ActionType.setNewPage,
+  type: Action.setNewPage,
   payload,
 });
 
 export const setNewErrorMessage = (payload: string) => ({
-  type: ActionType.setNewErrorMessage,
+  type: Action.setNewErrorMessage,
   payload,
 });

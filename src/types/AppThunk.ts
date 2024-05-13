@@ -1,5 +1,5 @@
-import { ThunkAction, UnknownAction } from "@reduxjs/toolkit";
-import { RootState } from "@reduxjs/toolkit/query";
+import {ThunkAction, UnknownAction} from '@reduxjs/toolkit';
+import {RootState} from '@reduxjs/toolkit/query';
 
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
