@@ -1,6 +1,5 @@
 import {
   ActivityIndicator,
-  Button,
   ScrollView,
   StyleSheet,
   Text,
@@ -9,9 +8,8 @@ import {
 import {Pokemon} from '../Pokemon/Pokemon.tsx';
 import {useDispatch, useSelector} from 'react-redux';
 import {State} from '../../types/State.ts';
-import React, {useCallback, useEffect, useMemo} from 'react';
+import React, {useEffect, useMemo} from 'react';
 import {fetchPokemons} from '../../api/fetchPokemons.ts';
-import {setNewPage} from '../../store/pokemonReducer.ts';
 
 export const Pokemons: React.FC = () => {
   const dispatch = useDispatch<any>();
@@ -20,19 +18,12 @@ export const Pokemons: React.FC = () => {
     (state: State) => state?.pokemonsFromServer?.results,
   );
   const query = useSelector((state: State) => state?.query);
-  const currentPage = useSelector((state: State) => state?.currentPage);
   const isLoading = useSelector((state: State) => state?.isLoading);
   const errorMessage = useSelector((state: State) => state?.errorMessage);
 
   useEffect(() => {
     dispatch(fetchPokemons());
   }, []);
-
-  const loadMore = useCallback(() => {
-    const newPage = currentPage + 1;
-    dispatch(fetchPokemons(newPage));
-    dispatch(setNewPage(newPage));
-  }, [currentPage]);
 
   const filteredPokemonList = useMemo(
     () =>
@@ -42,17 +33,16 @@ export const Pokemons: React.FC = () => {
     [pokemonsList, query],
   );
 
+  if (isLoading) {
+    return <ActivityIndicator size="large" color="#f00" />;
+  }
+
   return !errorMessage ? (
     <ScrollView>
       <View style={style.container}>
         {filteredPokemonList.map((pokemon, index) => (
           <Pokemon pokemon={pokemon} index={index} key={pokemon.name} />
         ))}
-        {!isLoading ? (
-          <Button title="LOAD MORE" onPress={loadMore} />
-        ) : (
-          <ActivityIndicator size="large" color="#f00" />
-        )}
       </View>
     </ScrollView>
   ) : (

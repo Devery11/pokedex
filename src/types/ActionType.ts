@@ -9,5 +9,4 @@ export type ActionType =
   | {type: Action.addPokemonsList; payload: NamedAPIResourceList}
   | {type: Action.setFilterQuery; payload: string}
   | {type: Action.setIsLoading; payload: boolean}
-  | {type: Action.setNewPage; payload: number}
   | {type: Action.setNewErrorMessage; payload: string};

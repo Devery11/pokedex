@@ -10,7 +10,6 @@ const defaultState = {
   },
   query: '',
   isLoading: true,
-  currentPage: 0,
   errorMessage: '',
 } as State;
 
@@ -50,11 +49,6 @@ export const pokemonReducer = (state = defaultState, action: ActionType) => {
         ...state,
         isLoading: action.payload,
       };
-    case Action.setNewPage:
-      return {
-        ...state,
-        currentPage: action.payload,
-      };
     case Action.setNewErrorMessage:
       return {
         ...state,
@@ -88,11 +82,6 @@ export const setFilterQuery = (payload: string) => ({
 
 export const setIsLoading = (payload: boolean) => ({
   type: Action.setIsLoading,
-  payload,
-});
-
-export const setNewPage = (payload: number) => ({
-  type: Action.setNewPage,
   payload,
 });
 

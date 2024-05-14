@@ -9,10 +9,10 @@ import {AppThunk} from '../types/AppThunk.ts';
 const API_URL = 'https://pokeapi.co/api/v2/pokemon/';
 
 export const fetchPokemons =
-  (page = 0, limit = 50): AppThunk =>
+  (limit = 151): AppThunk =>
   async dispatch => {
     dispatch(setIsLoading(true));
-    return fetch(API_URL + `?limit=${limit}&offset=${page * limit}`)
+    return fetch(API_URL + `?limit=${limit}`)
       .then(response => {
         if (response.ok) {
           return response.json();

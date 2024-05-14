@@ -9,7 +9,6 @@ describe('pokemonReducer', () => {
       },
       query: '',
       isLoading: true,
-      currentPage: 0,
       errorMessage: '',
     };
 
@@ -28,7 +27,6 @@ describe('pokemonReducer', () => {
     const expectedData = {
       query: '',
       isLoading: true,
-      currentPage: 0,
       errorMessage: '',
       pokemonsFromServer: {
         results: [{url: '', name: 'Charmander'}],
@@ -45,7 +43,6 @@ describe('pokemonReducer', () => {
     const initialState = {
       query: '',
       isLoading: true,
-      currentPage: 0,
       errorMessage: '',
       pokemonsFromServer: {
         results: [{url: '', name: 'Charmander'}],
@@ -70,7 +67,6 @@ describe('pokemonReducer', () => {
     const expectedData = {
       query: '',
       isLoading: true,
-      currentPage: 0,
       errorMessage: '',
       pokemonsFromServer: {
         results: [
@@ -95,7 +91,6 @@ describe('pokemonReducer', () => {
     const initialState = {
       query: '',
       isLoading: true,
-      currentPage: 0,
       errorMessage: '',
       pokemonsFromServer: {
         results: [{url: '', name: 'Charmander'}],
@@ -115,7 +110,6 @@ describe('pokemonReducer', () => {
     const expectedData = {
       query: 'qwerty',
       isLoading: true,
-      currentPage: 0,
       errorMessage: '',
       pokemonsFromServer: {
         results: [{url: '', name: 'Charmander'}],
@@ -132,7 +126,6 @@ describe('pokemonReducer', () => {
     const initialState = {
       query: '',
       isLoading: true,
-      currentPage: 0,
       errorMessage: '',
       pokemonsFromServer: {
         results: [{url: '', name: 'Charmander'}],
@@ -152,44 +145,6 @@ describe('pokemonReducer', () => {
     const expectedData = {
       query: '',
       isLoading: false,
-      currentPage: 0,
-      errorMessage: '',
-      pokemonsFromServer: {
-        results: [{url: '', name: 'Charmander'}],
-        count: 2,
-        next: null,
-        previous: null,
-      },
-    };
-
-    expect(result).toEqual(expectedData);
-  });
-
-  it('should set newPage to state', () => {
-    const initialState = {
-      query: '',
-      isLoading: true,
-      currentPage: 0,
-      errorMessage: '',
-      pokemonsFromServer: {
-        results: [{url: '', name: 'Charmander'}],
-        count: 2,
-        next: null,
-        previous: null,
-      },
-    };
-
-    const action = {
-      type: Action.setNewPage,
-      payload: 3,
-    };
-
-    const result = pokemonReducer(initialState, action);
-
-    const expectedData = {
-      query: '',
-      isLoading: true,
-      currentPage: 3,
       errorMessage: '',
       pokemonsFromServer: {
         results: [{url: '', name: 'Charmander'}],
@@ -206,7 +161,6 @@ describe('pokemonReducer', () => {
     const initialState = {
       query: '',
       isLoading: true,
-      currentPage: 0,
       errorMessage: '',
       pokemonsFromServer: {
         results: [{url: '', name: 'Charmander'}],
@@ -226,7 +180,6 @@ describe('pokemonReducer', () => {
     const expectedData = {
       query: '',
       isLoading: true,
-      currentPage: 0,
       errorMessage: 'some error',
       pokemonsFromServer: {
         results: [{url: '', name: 'Charmander'}],
