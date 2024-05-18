@@ -20,8 +20,8 @@ export const fetchPokemons =
           throw new Error(response.statusText);
         }
       })
-      .then(json => {
-        dispatch(addPokemonsListFromServer(json));
+      .then(pokemons => {
+        dispatch(addPokemonsListFromServer(pokemons));
       })
       .catch(error => dispatch(setNewErrorMessage(error.message)))
       .finally(() => dispatch(setIsLoading(false)));

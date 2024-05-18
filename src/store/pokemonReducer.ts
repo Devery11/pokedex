@@ -16,14 +16,18 @@ const defaultState = {
 export const pokemonReducer = (state = defaultState, action: ActionType) => {
   switch (action.type) {
     case Action.addPokemonsList:
+      const newPokemons = action.payload.results.map((pokemon, index) => {
+        return {
+          ...pokemon,
+          key: state.pokemonsFromServer.results.length + index,
+        };
+      });
+
       return {
         ...state,
         pokemonsFromServer: {
           ...action.payload,
-          results: [
-            ...state?.pokemonsFromServer?.results,
-            ...action.payload.results,
-          ],
+          results: [...state?.pokemonsFromServer?.results, ...newPokemons],
         },
       };
     case Action.addPokemonInfoByName:

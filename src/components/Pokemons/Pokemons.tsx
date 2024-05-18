@@ -1,9 +1,8 @@
 import {
   ActivityIndicator,
-  ScrollView,
+  FlatList,
   StyleSheet,
   Text,
-  View,
 } from 'react-native';
 import {Pokemon} from '../Pokemon/Pokemon.tsx';
 import {useDispatch, useSelector} from 'react-redux';
@@ -38,13 +37,14 @@ export const Pokemons: React.FC = () => {
   }
 
   return !errorMessage ? (
-    <ScrollView>
-      <View style={style.container}>
-        {filteredPokemonList.map((pokemon, index) => (
-          <Pokemon pokemon={pokemon} index={index} key={pokemon.name} />
-        ))}
-      </View>
-    </ScrollView>
+    <FlatList
+      style={style.container}
+      data={filteredPokemonList}
+      renderItem={pokemon => (
+        <Pokemon pokemon={pokemon.item} index={pokemon.item.key} />
+      )}
+      keyExtractor={item => String(item.key)}
+    />
   ) : (
     <Text style={style.errorMessage}>{errorMessage}</Text>
   );
@@ -52,7 +52,7 @@ export const Pokemons: React.FC = () => {
 
 const style = StyleSheet.create({
   container: {
-    marginHorizontal: 16,
+    paddingHorizontal: 16,
   },
   errorMessage: {
     fontSize: 24,
